@@ -1,0 +1,190 @@
+@import url('https://fonts.googleapis.com/css?family=Raleway');
+body {
+    margin: 10;
+    padding: 0;
+    font-family: 'Raleway', sans-serif;
+    color: #a81d1d;
+}
+
+#container-login {
+    background-color: #1ebc55;
+    position: relative;
+    top: 50%;
+    margin: auto;
+    width: 500px;
+    height: 700px;
+    border-radius: 0.35em;
+    box-shadow: 0 3px 10px 0 rgba(0, 0, 0, 0.2);
+    text-align: center;
+}
+
+#container-register {
+    background-color: #1D1F20;
+    position: relative;
+    top: 20%;
+    margin: auto;
+    width: 340px;
+    height: 480px;
+    border-radius: 0.35em;
+    box-shadow: 0 3px 10px 0 rgba(119, 10, 10, 0.763);
+    text-align: center;
+}
+
+#title {
+    position: relative;
+    background-color: #29317a;
+    width: 100%;
+    padding: 20px 0px;
+    border-radius: 0.35em;
+    font-size: 22px;
+    border-bottom: 1px solid rgba(236, 16, 16, 0.441)
+}
+
+.lock {
+	position: relative;
+	top: 2px;
+}
+
+.input {
+    margin: auto;
+    width: 240px;
+    border-radius: 4px;
+    background-color: #158ecb;
+    padding: 8px 0px;
+    margin-top: 15px;
+}
+
+.input-addon {
+    float: left;
+    background-color: #1687c0;
+    border: 1px solid #156187;
+    padding: 4px 8px;
+    border-right: 1px solid rgba(166, 17, 17, 0.55);
+}
+
+input[type=checkbox] {
+    cursor: pointer;
+}
+
+input[type=text] {
+    color: rgb(148, 148, 148);
+    margin: 0;
+    background-color: #f7f7f8;
+    border: 2px solid #1796d5;
+    padding: 10px 10px;
+    border-radius: 100px;
+}
+
+input[type=text]:focus {
+    border: 1px solid rgb(252, 252, 252);
+}
+
+input[type=password] {
+    color: #949494;
+    margin: 0;
+    background-color: rgb(250, 250, 250);
+    border: 2px solid #127cb0;
+    padding: 10px 10px;
+    border-radius: 100px;
+}
+
+input[type=password]:focus {
+    border: 1px solid #157fb4;
+}
+
+input[type=email] {
+    color: #cd1919;
+    margin: 0;
+    background-color: #373b3d;
+    border: 1px solid #373b3db3;
+    padding: 10px 10px;
+    border-radius: 3px;
+}
+
+input[type=email]:focus {
+    border: 1px solid #197bac;
+}
+
+.forgot-password {
+    position: relative;
+    bottom: 0%;
+}
+
+.forgot-password a:link {
+    color: #C1C3C6;
+    text-decoration: none;
+}
+
+.forgot-password a:visited {
+    color: #C1C3C6;
+    text-decoration: none;
+}
+
+.forgot-password a:hover {
+    color: #FFF;
+    transition: color 1s;
+}
+
+.privacy {
+    margin-top: 5px;
+    position: relative;
+    font-size: 12px;
+    bottom: 0%;
+}
+
+.privacy a:link {
+    color: #e60c0c;
+    text-decoration: none;
+}
+
+.privacy a:visited {
+    color: #8a0f0f;
+    text-decoration: none;
+}
+
+.privacy a:hover {
+    color: #0c3e8a;
+    transition: color 1s;
+}
+
+*:focus {
+    outline: none;
+}
+
+.remember-me {
+    margin: 10px 0;
+}
+
+input[type=submit] {
+    padding: 6px 25px;
+    background: #373E4A;
+    color: rgb(193, 198, 193);
+    font-weight: bold;
+    border: 0 none;
+    cursor: pointer;
+    border-radius: 3px;
+}
+
+.register {
+    margin: auto;
+    padding: 16px 0;
+    text-align: center;
+    margin-top: 40px;
+    width: 85%;
+    border-top: 1px solid #1d53a4;
+}
+
+.clearfix {
+    clear: both;
+}
+
+#register-link {
+    margin-top: 10px;
+    padding: 6px 25px;
+    background: #0b3d94;
+    color: #891171;
+    font-weight: bold;
+    border: 0 none;
+    cursor: pointer;
+    border-radius: 3px;
+}
