@@ -1,4 +1,3 @@
-
 from flask import Flask, render_template, request, redirect, url_for
 import os
 from datetime import datetime
@@ -12,7 +11,7 @@ app = Flask(__name__)
 
 @app.route('/',methods=['GET'])
 def main():
-    return redirect(url_for('static', filename='index.html'))
+    return redirect(url_for('static', filename='index2.html'))
 
 @app.route('/upload_data_buffer',methods=['POST'])
 def upload_data_buffer():
