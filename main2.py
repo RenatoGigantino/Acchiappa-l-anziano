@@ -80,20 +80,25 @@ def graph_data(s):
 
 @app.route('/login', methods=['POST'])
 def login():
-    if current_user.is_authenticated:
-        return redirect(url_for('/main'))
+    # if current_user.is_authenticated:
+    #     return redirect(url_for('/main'))
     username = request.values['u']
     password = request.values['p']
+    print(username, password)
 
     db = firestore.Client.from_service_account_json('credentials.json') if local else firestore.Client()
     user = db.collection('utenti').document(username).get()
     if user.exists and user.to_dict()['password']==password:
         login_user(User(username))
-        next_page = request.args.get('next')
-        if not next_page:
-            next_page = '/main'
-        return redirect(next_page)
-    return redirect('/static/login.html')
+            
+        # next_page = request.args.get('next')
+        # if not next_page:
+        # next_page = 'main'
+        # return redirect(url_for('/main'))
+    # return redirect('/static/login.html')
+        return redirect(url_for('static', filename='acceleration.html'))
+        # return 'sensor404.html'
+    return 'non ok'
 
 
 @app.route('/logout')
@@ -105,7 +110,7 @@ def logout():
 @app.route('/adduser', methods=['GET','POST'])
 @login_required
 def adduser():
-    if current_user.username == 'renato':
+    if current_user.username == 'marco':
         if request.method == 'GET':
             return redirect('/static/adduser.html')
         else:
