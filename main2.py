@@ -3,6 +3,7 @@ import json
 from google.cloud import firestore
 from flask_login import LoginManager, current_user, login_user, logout_user, login_required, UserMixin
 from secret import secret_key
+from flask_cors import CORS
 
 class User(UserMixin):
     def __init__(self, username):
@@ -14,7 +15,7 @@ class User(UserMixin):
 app = Flask(__name__)
 app.config['SECRET_KEY'] = secret_key
 local = True
-
+CORS(app)
 login = LoginManager(app)
 login.login_view = '/static/login.html'
 
@@ -31,18 +32,28 @@ def load_user(username):
 @app.route('/main',methods=['GET','POST'])
 @app.route('/sensors',methods=['GET'])
 def main():
-    db = firestore.Client.from_service_account_json('credentials.json') if local else firestore.Client()
-    s = []
-    for doc in db.collection('sensors').stream():
-        s.append(doc.id)
-    return json.dumps(s), 200
+    # db = firestore.Client.from_service_account_json('credentials.json') if local else firestore.Client()
+    # s = []
+    # for doc in db.collection('sensors').stream():
+    #     s.append(doc.id)
+    # return json.dumps(s), 200
+    return redirect('/static/login.html')
+
+
+@app.route('/getuser',methods=['GET'])
+def getuser ():
+    
+
 
 
 @app.route('/sensors/<s>',methods=['POST'])
 def add_data(s):
-    val = float(request.values['val'])
+    print(request.values)
+    data=request.get_json()
+    val = data.get('val')
+    print(val, s)
     db = firestore.Client.from_service_account_json('credentials.json') if local else firestore.Client()
-    doc_ref = db.collection('sensors').document(s)
+    doc_ref = db.collection('acceleration').document(s)
     entity = doc_ref.get()
     if entity.exists and 'values' in entity.to_dict():
         v = entity.to_dict()['values']
@@ -108,20 +119,21 @@ def logout():
 
 
 @app.route('/adduser', methods=['GET','POST'])
-@login_required
+# @login_required
 def adduser():
-    if current_user.username == 'marco':
-        if request.method == 'GET':
-            return redirect('/static/adduser.html')
-        else:
-            username = request.values['u']
-            password = request.values['p']
-            db = firestore.Client.from_service_account_json('credentials.json') if local else firestore.Client()
-            user = db.collection('utenti').document(username)
-            user.set({'username':username,'password':password})
-            return 'ok'
+    # if current_user.username == 'marco':
+    if request.method == 'GET':
+        return redirect('/static/adduser.html')
     else:
-        return redirect('/')
+        username = request.values['u']
+        password = request.values['p']
+        email = request.values['m']
+        db = firestore.Client.from_service_account_json('credentials.json') if local else firestore.Client()
+        user = db.collection('utenti').document(username)
+        user.set({'username':username,'password':password, 'email':email})
+        return redirect('/static/login.html')
+    # else:
+    #     return redirect('/')
 
 
 if __name__ == '__main__':
