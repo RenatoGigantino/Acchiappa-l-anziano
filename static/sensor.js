@@ -6,9 +6,9 @@ function initSensor() {
     k = sensor.z.toFixed(2)
 
     // Sostituisci la soglia con il valore desiderato
-    const soglia_i = 2.0;
-    const soglia_j = 2.0;
-    const soglia_k = 2.0;
+    const soglia_i = 4.0;
+    const soglia_j = 4.0;
+    const soglia_k = 4.0;
 
     $("#output").html(i+"<br>"+j+"<br>"+k+"<br>")
     console.log(i);
@@ -24,9 +24,13 @@ function initSensor() {
         headers: {
           'Content-Type': 'application/json'
         },
-        data: JSON.stringify({'val':`${i}_${j}_${k}`}),
-        processData: false,
-        contentType: false,
+        data: JSON.stringify({
+          'val': `${i}_${j}_${k}`,
+          'time': new Date().toLocaleString(), // Add the current time
+          'i': parseFloat(i), // Add the values i, j, and k as numbers
+          'j': parseFloat(j),
+          'k': parseFloat(k)
+        }),
         success: function(data) {
           // Gestisci la risposta qui, se necessario
           console.log(data);
@@ -36,8 +40,64 @@ function initSensor() {
           console.error('Errore nella richiesta:', error);
         }
       });
+      
     }
   };
+
+
+  function fetchDataAndCreateChart() {
+    $.ajax({
+      url: 'http://localhost:80/sensors/data',
+      type: 'GET',  // Assuming you have an endpoint to retrieve data
+      success: function(data) {
+        // Process the data and create the chart
+        createBarChart(data);
+      },
+      error: function(error) {
+        console.error('Error fetching data:', error);
+      }
+    });
+  }
+  
+  // function createBarChart(data) {
+  //   // Extract minutes and count occurrences
+  //   const minutesCount = {};
+  //   data.forEach(record => {
+  //     const minute = new Date(record.time).getMinutes();
+  //     minutesCount[minute] = (minutesCount[minute] || 0) + 1;
+  //   });
+  
+  //   // Prepare data for the chart
+  //   const labels = Object.keys(minutesCount).map(minute => 'Minute ${minute}');
+  //   const values = Object.values(minutesCount);
+  
+  //   // Create the bar chart using Chart.js
+  //   var ctx = document.getElementById('barChart').getContext('2d');
+  //   var myChart = new Chart(ctx, {
+  //     type: 'bar',
+  //     data: {
+  //       labels: labels,
+  //       datasets: [{
+  //         label: 'Records per Minute',
+  //         data: values,
+  //         backgroundColor: 'rgba(75, 192, 192, 0.2)',
+  //         borderColor: 'rgba(75, 192, 192, 1)',
+  //         borderWidth: 1
+  //       }]
+  //     },
+  //     options: {
+  //       scales: {
+  //         y: {
+  //           beginAtZero: true
+  //         }
+  //       }
+  //     }
+  //   });
+  // }
+  
+  // // Call the function to fetch data and create the chart
+  // fetchDataAndCreateChart();
+
 
   sensor.onerror = function(event) {
     if (event.error.name == 'NotReadableError') {
