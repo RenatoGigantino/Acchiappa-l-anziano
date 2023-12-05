@@ -6,7 +6,8 @@ from secret import secret_key
 from flask_cors import CORS
 import smtplib # modulo per inviare email
 from email.mime.text import MIMEText
-import ssl 
+import ssl
+from datetime import datetime
 
 
 class User(UserMixin):
@@ -79,22 +80,29 @@ def send_email ():
 
 
 
-@app.route('/sensors/<s>',methods=['POST'])
+@app.route('/sensors/<s>', methods=['POST'])
 def add_data(s):
     print(request.values)
-    data=request.get_json()
+    data = request.get_json()
     val = data.get('val')
+    
+    # Add timestamp
+    timestamp = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+    data_dict = {'value': val, 'timestamp': timestamp}
+
     print(val, s)
     db = firestore.Client.from_service_account_json('credentials.json') if local else firestore.Client()
     doc_ref = db.collection('acceleration').document(s)
     entity = doc_ref.get()
+
     if entity.exists and 'values' in entity.to_dict():
         v = entity.to_dict()['values']
-        v.append(val)
-        doc_ref.update({'values':v})
+        v.append(data_dict)
+        doc_ref.update({'values': v})
     else:
-        doc_ref.set({'values':[val]})
-    return 'ok',200
+        doc_ref.set({'values': [data_dict]})
+
+    return 'ok', 200
 
 
 @app.route('/sensors/<s>',methods=['GET'])
@@ -119,6 +127,7 @@ def graph_data(s):
             d.append([t,x])
             t+=1
         return render_template('graph.html',sensor=s,data=json.dumps(d))
+        # return redirect(url_for('static', filename='acceleration.html'))
     else:
         return redirect(url_for('static', filename='sensor404.html'))
 
