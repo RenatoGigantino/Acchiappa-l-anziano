@@ -1,11 +1,21 @@
 function initSensor() {
     sensor = new LinearAccelerationSensor({ frequency: 60 });
     sensor.onreading = function() {
-      i = sensor.x.toFixed(2)
+      i = (sensor.x.toFixed(2))
       j = sensor.y.toFixed(2)
       k = sensor.z.toFixed(2)
+
+      // // Sostituisci la soglia con il valore desiderato
+      // const soglia = 2.0;
+
       $("#output").html(i+"<br>"+j+"<br>"+k+"<br>")
       console.log(i);
+
+      // if (Math.abs(parseFloat(i)) > soglia || Math.abs(parseFloat(j)) > soglia || Math.abs(parseFloat(k)) > soglia) {
+      //   // Se uno dei valori supera la soglia, invia la mail
+      //   mail();
+      // }
+      
       $.ajax({
         url: `http://localhost:80/sensors/data`,
         type: 'POST',
@@ -59,6 +69,20 @@ async function mail(){
 }
 
 
-//  function logout () {
-
-//  }
+  function logout() {
+    // Effettua una richiesta AJAX per eseguire il logout
+    $.ajax({
+        url: 'http://localhost:80/logout', // Assicurati di utilizzare l'URL corretto per il logout
+        type: 'GET',
+        success: function (data) {
+            // Gestisci la risposta qui, se necessario
+            console.log(data);
+            // Reindirizza l'utente alla pagina di login o a un'altra pagina appropriata
+            window.location.href = "login.html"; // Cambia '/login' con il percorso desiderato
+        },
+        error: function (error) {
+            // Gestisci gli errori qui, se necessario
+            console.error('Errore nella richiesta di logout:', error);
+        }
+    });
+}
