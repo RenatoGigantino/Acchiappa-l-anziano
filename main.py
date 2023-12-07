@@ -37,9 +37,9 @@ def load_user(username):
 @app.route('/main',methods=['GET','POST'])
 @app.route('/sensors',methods=['GET'])
 def main():
-    # db = firestore.Client.from_service_account_json('credentials.json') if local else firestore.Client()
-    # s = []
-    # for doc in db.collection('sensors').stream():
+    db = firestore.Client.from_service_account_json('credentials.json') if local else firestore.Client()
+    s = []
+    # for doc in db.collection('acceleration').stream():
     #     s.append(doc.id)
     # return json.dumps(s), 200
     return redirect('/static/login.html')
@@ -92,7 +92,7 @@ def add_data(s):
 
     print(val, s)
     db = firestore.Client.from_service_account_json('credentials.json') if local else firestore.Client()
-    doc_ref = db.collection('acceleration').document(s)
+    doc_ref = db.collection('acceleration').document(current_user.username)
     entity = doc_ref.get()
 
     if entity.exists and 'values' in entity.to_dict():
@@ -108,25 +108,35 @@ def add_data(s):
 @app.route('/sensors/<s>',methods=['GET'])
 def get_data(s):
     db = firestore.Client.from_service_account_json('credentials.json') if local else firestore.Client()
-    entity = db.collection('sensors').document(s).get()
+    entity = db.collection('acceleration').document(s).get()
     if entity.exists:
         return json.dumps(entity.to_dict()['values']),200
     else:
         return 'sensor not found',404
 
 @app.route('/graph/<s>',methods=['GET'])
-@login_required
+# @login_required
 def graph_data(s):
     db = firestore.Client.from_service_account_json('credentials.json') if local else firestore.Client()
-    entity = db.collection('sensors').document(s).get()
+    entity = db.collection('acceleration').document(s).get()
+    print(entity)
     if entity.exists:
         d = []
         d.append(['Number',s])
         t = 0
+        dizionario={}
         for x in entity.to_dict()['values']:
-            d.append([t,x])
-            t+=1
-        return render_template('graph.html',sensor=s,data=json.dumps(d))
+            if x['timestamp'] in dizionario:
+               dizionario [x['timestamp']]+=1
+            else:
+               dizionario [x['timestamp']]=1   
+            print(x)
+            # d.append([t,x])
+            # t+=1
+        print(dizionario)
+        list_of_items = list(dizionario.items())
+        list_of_items.insert(0,  ['date', 'number'])
+        return render_template('graph.html',sensor=s,data=json.dumps(list_of_items))
         # return redirect(url_for('static', filename='acceleration.html'))
     else:
         return redirect(url_for('static', filename='sensor404.html'))
