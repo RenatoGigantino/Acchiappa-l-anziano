@@ -121,21 +121,44 @@ def graph_data(s):
     entity = db.collection('acceleration').document(s).get()
     print(entity)
     if entity.exists:
-        d = []
-        d.append(['Number',s])
-        t = 0
-        dizionario={}
-        for x in entity.to_dict()['values']:
-            if x['timestamp'] in dizionario:
-               dizionario [x['timestamp']]+=1
-            else:
-               dizionario [x['timestamp']]=1   
-            print(x)
-            # d.append([t,x])
-            # t+=1
-        print(dizionario)
-        list_of_items = list(dizionario.items())
-        list_of_items.insert(0,  ['date', 'number'])
+        # d = []
+        # d.append(['Number',s])
+        # t = 0
+        # dizionario={}
+        # for x in entity.to_dict()['values']:
+        #     if x['timestamp'] in dizionario:
+        #        dizionario [x['timestamp']]+=1
+        #     else:
+        #        dizionario [x['timestamp']]=1   
+        #     print(x)
+        #     # d.append([t,x])
+        #     # t+=1
+        # print(dizionario)
+        # list_of_items = list(dizionario.items())
+        # list_of_items.insert(0,  ['date', 'cadute'])
+        values = entity.to_dict().get('values', [])
+
+        # Create a dictionary to store counts for each day
+        day_counts = {}
+
+        # Process each value and count occurrences for each day
+        for value in values:
+            timestamp_str = value.get('timestamp', '')
+            if timestamp_str:
+                timestamp = datetime.strptime(timestamp_str, '%Y-%m-%d %H:%M:%S')
+                day = timestamp.strftime('%Y-%m-%d')
+
+                if day in day_counts:
+                    day_counts[day] += 1
+                else:
+                    day_counts[day] = 1
+
+        # Convert the dictionary to a list of items
+        list_of_items = list(day_counts.items())
+        list_of_items.insert(0, ['date', 'cadute'])
+        # transposed_data = [['date', 'cadute']]
+        # for day, count in day_counts.items():
+        #     transposed_data.append([day, count])
         return render_template('graph.html',sensor=s,data=json.dumps(list_of_items))
         # return redirect(url_for('static', filename='acceleration.html'))
     else:
