@@ -6,12 +6,44 @@
     <title>Acchiappa l'anziano</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="sensor.js"></script>
+
 </head>
 <body>
+
+<a href="index.html">HOME</a>
+
+<script>
+    async function to_graph(){
+        try {
+            const response = await fetch('http://localhost:80/getcurrent', {
+                method: 'GET',
+                mode: "cors",
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                },
+            });
+            const current_user = await response.json();
+            
+            var url = window.location.origin;
+            url = url + "/graph/" + current_user
+            window.location.href = url;
+
+        } catch (error) {
+            console.error(error);
+        }
+
+    }
+</script>
+
+<a href="#" onclick="to_graph()">graph</a><br>
+
+<br>
+<br>
+
 <button onclick="initSensor()">Start</button>
 <button onclick="logout()">Logout</button>
 <button onclick="mail()">prova mail</button>
-<canvas id="barChart" width="400" height="200"></canvas>
 
 <div id="output"></div>
 </body>
