@@ -1,4 +1,4 @@
-from flask import Flask,request,render_template,redirect,url_for, make_response
+from flask import Flask,request,render_template,redirect,url_for, make_response, jsonify
 import json
 from google.cloud import firestore
 from flask_login import LoginManager, current_user, login_user, logout_user, login_required, UserMixin
@@ -37,13 +37,18 @@ def load_user(username):
 @app.route('/main',methods=['GET','POST'])
 @app.route('/sensors',methods=['GET'])
 def main():
-    db = firestore.Client.from_service_account_json('credentials.json') if local else firestore.Client()
-    s = []
+    # db = firestore.Client.from_service_account_json('credentials.json') if local else firestore.Client()
+    # s = []
     # for doc in db.collection('acceleration').stream():
     #     s.append(doc.id)
     # return json.dumps(s), 200
     return redirect('/static/login.html')
 
+@app.route('/getcurrent', methods=['GET'])
+def get_current_user():
+    # response = Flask.make_response(('Hello world!\n'), {'X-My-Header': 'foo'})
+    # return response
+    return jsonify(current_user.username)   
 
 @app.route('/sendemail',methods=['GET'])
 def send_email ():
@@ -182,7 +187,7 @@ def log_in():
         # next_page = 'main'
         # return redirect(url_for('/main'))
     # return redirect('/static/login.html')
-        return redirect(url_for('static', filename='acceleration.html'))
+        return redirect(url_for('static', filename='index.html'))
         # return 'sensor404.html'
     return 'non ok'
 
