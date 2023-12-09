@@ -45,59 +45,9 @@ function initSensor() {
   };
 
 
-  function fetchDataAndCreateChart() {
-    $.ajax({
-      url: 'http://localhost:80/sensors/data',
-      type: 'GET',  // Assuming you have an endpoint to retrieve data
-      success: function(data) {
-        // Process the data and create the chart
-        createBarChart(data);
-      },
-      error: function(error) {
-        console.error('Error fetching data:', error);
-      }
-    });
-  }
   
-  // function createBarChart(data) {
-  //   // Extract minutes and count occurrences
-  //   const minutesCount = {};
-  //   data.forEach(record => {
-  //     const minute = new Date(record.time).getMinutes();
-  //     minutesCount[minute] = (minutesCount[minute] || 0) + 1;
-  //   });
-  
-  //   // Prepare data for the chart
-  //   const labels = Object.keys(minutesCount).map(minute => 'Minute ${minute}');
-  //   const values = Object.values(minutesCount);
-  
-  //   // Create the bar chart using Chart.js
-  //   var ctx = document.getElementById('barChart').getContext('2d');
-  //   var myChart = new Chart(ctx, {
-  //     type: 'bar',
-  //     data: {
-  //       labels: labels,
-  //       datasets: [{
-  //         label: 'Records per Minute',
-  //         data: values,
-  //         backgroundColor: 'rgba(75, 192, 192, 0.2)',
-  //         borderColor: 'rgba(75, 192, 192, 1)',
-  //         borderWidth: 1
-  //       }]
-  //     },
-  //     options: {
-  //       scales: {
-  //         y: {
-  //           beginAtZero: true
-  //         }
-  //       }
-  //     }
-  //   });
-  // }
-  
-  // // Call the function to fetch data and create the chart
-  // fetchDataAndCreateChart();
 
+  
 
   sensor.onerror = function(event) {
     if (event.error.name == 'NotReadableError') {
