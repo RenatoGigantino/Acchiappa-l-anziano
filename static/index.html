@@ -3,16 +3,73 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Title</title>
+    <title>Acchiappa l'anziano</title>
+    <div>
+        <p> HOME </p>
+    </div>
+    <style>
+        body {
+    margin: 10;
+    padding: 0;
+    font-family: 'Raleway', sans-serif;
+    color: #a81d1d;
+}
+
+    </style>
+
+
 </head>
 <body>
-<!-- <a href="geolocation.html">geolocation</a><br> -->
+    <script>
+        async function to_graph(){
+            try {
+                const response = await fetch('http://localhost:80/getcurrent', {
+                    method: 'GET',
+                    mode: "cors",
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json',
+                    },
+                });
+                const current_user = await response.json();
+                
+                var url = window.location.origin;
+                url = url + "/graph/" + current_user
+                window.location.href = url;
+
+            } catch (error) {
+                // console.log("qui")
+                console.error(error);
+            }
+
+        }
+
+        function logout() {
+        // Effettua una richiesta AJAX per eseguire il logout
+        $.ajax({
+            url: 'http://localhost:80/logout', // Assicurati di utilizzare l'URL corretto per il logout
+            type: 'GET',
+            success: function (data) {
+                // Gestisci la risposta qui, se necessario
+                console.log(data);
+                // Reindirizza l'utente alla pagina di login o a un'altra pagina appropriata
+                window.location.href = "login.html"; // Cambia '/login' con il percorso desiderato
+            },
+            error: function (error) {
+                // Gestisci gli errori qui, se necessario
+                console.error('Errore nella richiesta di logout:', error);
+            }
+        });
+        }
+    </script>
+
 <a href="acceleration.html">acceleration</a><br>
-<!-- <a href="acceleration_w_upload.html">acceleration_upload</a><br>
-<a href="acceleration_w_upload_buffer.html">acceleration_upload_buffer</a><br>
-<a href="ambientlight.html">ambient light</a> before go to <a href="chrome://flags/#enable-generic-sensor-extra-classes">chrome://flags/#enable-generic-sensor-extra-classes</a><br>
-<a href="orientation.html">orientation</a><br>
-<a href="camera.html">camera</a><br>
-<a href="test.html">test function</a><br> -->
+<br>
+<a href="#" onclick="to_graph()">graph</a><br>
+<br>
+<br>
+<button onclick="logout()">Logout</button>
+
+
 </body>
 </html>
