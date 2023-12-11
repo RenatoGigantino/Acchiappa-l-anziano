@@ -1,19 +1,38 @@
 <html>
 <body>
-<form action="/adduser" method="post">
-    <!-- username <input type="text" name="u"><br> -->
-    <title>Acchiappa l'anziano</title>
-        <div>
-            <p> Adduser </p>
-        </div>
-    mail <input type="email" name="m"><br>
-    password <input type="password" name="p"><br>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="style.css">
+        <title>Acchiappa l'anziano</title>
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    </head>
+    <header>
+        <h1> Fall Detector </h1>
+        <h2> Register </h2>
+    </header>
+
+    <!-- <div>
+        <p> Login </p>
+    </div> -->
+    <button>    
+    <form action="/login" method="post">
+    mail <input type="email" name="m">
+    password <input type="password" name="p">
+    <br>
+    <br>
     <input type="submit">
-    <div>
-        <p>
-            hai già un account? <a href="login.html">login</a>
-        </p>
-    </div>
+    </button>
+   <nav>
+    <p>
+        hai già un account? <a href="login.html">login</a>
+    </p>
+   </nav>
+        
+    <!-- mail <input type="email" name="m"><br>
+    password <input type="password" name="p"><br>
+    <input type="submit"> -->
 </form>
 </body>
 </html>
