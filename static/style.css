@@ -1,0 +1,114 @@
+        body {
+            font-family: 'Comic Sans MS', cursive;
+            margin: 0;
+            padding: 0;
+            background-image: url('logo.jpeg');
+            background-size: 80%;
+            background-position: center 130px;
+            text-align: center;
+        }
+
+        header {
+            background-color: #4CAF50;
+            color: white;
+            padding: 3px; /* Increased padding for a larger cartoonish header */
+            border-bottom-left-radius: 50px; /* Added border-radius for a more cartoonish shape */
+            border-bottom-right-radius: 50px;
+            position: relative;
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, #4CAF50, #45a049); /* Added a gradient for a fancier look */
+            opacity: 0.8; /* Adjusted the opacity for a subtle effect */
+            z-index: -1; /* Placed the gradient behind the header content */
+            border-bottom-left-radius: 50px;
+            border-bottom-right-radius: 50px;
+        }
+
+        h1 {
+            font-family: 'Comic Sans MS', cursive;
+            font-size: 4em;
+            margin-bottom: 10px;
+            z-index: 1; /* Ensures the text is above the gradient background */
+        }
+
+        nav {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        nav a {
+            margin: 0 10px;
+            text-decoration: none;
+            color: #333;
+            background-color: #e6e6e6;
+            padding: 15px 30px; /* Increased padding for larger buttons */
+            border-radius: 8px; /* Increased border-radius for a rounded look */
+            transition: background-color 0.3s;
+            font-size: 20px; /* Increased font size */
+        }
+
+        nav a:hover {
+            background-color: #ccc;
+        }
+
+        main {
+            margin: 20px;
+        }
+
+        button {
+            padding: 20px 40px; /* Increased padding for larger buttons */
+            font-size: 24px; /* Increased font size */
+            margin: 10px;
+            cursor: pointer;
+            border-radius: 12px; /* Increased border-radius for a rounded look */
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            transition: background-color 0.3s;
+            font-family: 'Comic Sans MS', cursive;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        .white-box {
+            background-color: white;
+            padding: 200px;
+            border-radius: 200px;
+            margin-top: 20px; /* Adjusted the margin to create space below the buttons */
+  	        margin-right: 500px; /* Added right margin */
+            margin-left: 500px; /* Added left margin */
+	        border: 10px solid #a0dca0; /* Added a light green border */
+            font-size: 40px;
+        }
+
+        footer {
+            position: fixed;
+            bottom: 0;
+            right: 0;
+            margin: 20px;
+        }
+
+        footer button {
+            padding: 30px 60px; /* Increased padding for larger buttons */
+            font-size: 28px; /* Increased font size */
+            border-radius: 12px; /* Increased border-radius for a rounded look */
+            background-color: #FFD0D0;
+            color: white;
+            border: none;
+            transition: background-color 0.3s;
+            font-family: 'Comic Sans MS', cursive;
+        }
+
+        footer button:hover {
+            background-color: #FFA0A0;
+        }
