@@ -1,0 +1,6 @@
+flask
+google-cloud-firestore
+flask-login
+flask_cors
+datetime
+pyopenssl
